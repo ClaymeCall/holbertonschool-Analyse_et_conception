@@ -8,11 +8,12 @@
 
 ## Règles de gestion
 
-- Un **Client** place **0..n Commandes**
+- Un **Client** passe **0..n Commandes**
 - Une **Commande** contient **1..n Produits**
-- Une **Commande** est associée à **1 Client** (obligatoire)
+- Une **Commande** est associée à **1 Client**
 - Un **Produit** apparaît dans **0..n Commandes**
-- Le **total_ligne** est calculé (quantité × prix_unitaire_ht) et n'est pas une entité
+- La **quantité** est portée par la relation entre commande et produit
+- Le **total_ligne** est calculé (quantité × prix_unitaire_ht)
 - Une **Commande** a un **statut** parmi [LIVREE, EN_COURS]
 
 ## Cardinalités min/max
