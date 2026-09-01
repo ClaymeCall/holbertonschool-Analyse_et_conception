@@ -23,18 +23,18 @@ CREATE TABLE COMMANDE (
 );
 
 CREATE TABLE PRODUIT (
-  id_produit UUID PRIMARY KEY,
+  code_prod VARCHAR(20) PRIMARY KEY,
   designation VARCHAR(128) NOT NULL,
-  prix_unitaire_ht DECIMAL(10,2) NOT NULL
+  prix_unitaire_ht DECIMAL(10,2) NOT NULL CHECK (prix_unitaire_ht > 0)
 );
 
 CREATE TABLE LIGNE_COMMANDE (
   id_commande UUID,
-  id_produit UUID,
+  code_prod VARCHAR(20),
   FOREIGN KEY (id_commande) REFERENCES COMMANDE(id_commande),
-  FOREIGN KEY (id_produit) REFERENCES PRODUIT(id_produit),
+  FOREIGN KEY (code_prod) REFERENCES PRODUIT(code_prod),
   quantite INT NOT NULL CHECK (quantite > 0),
-  PRIMARY KEY (id_commande, id_produit)
+  PRIMARY KEY (id_commande, code_prod)
 );
 
 COMMIT;
