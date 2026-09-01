@@ -17,7 +17,7 @@ CREATE TABLE CLIENT (
 CREATE TABLE COMMANDE (
   id_commande UUID PRIMARY KEY,
   id_client UUID NOT NULL,
-  FOREIGN KEY (id_client) REFERENCES CLIENT(id_client),
+  FOREIGN KEY (id_client) REFERENCES CLIENT(id_client) ON DELETE CASCADE,
   date_achat DATE NOT NULL,
   statut VARCHAR(16) NOT NULL CHECK(statut IN ('LIVREE', 'EN_COURS'))
 );
@@ -31,8 +31,8 @@ CREATE TABLE PRODUIT (
 CREATE TABLE LIGNE_COMMANDE (
   id_commande UUID,
   code_prod VARCHAR(20),
-  FOREIGN KEY (id_commande) REFERENCES COMMANDE(id_commande),
-  FOREIGN KEY (code_prod) REFERENCES PRODUIT(code_prod),
+  FOREIGN KEY (id_commande) REFERENCES COMMANDE(id_commande) ON DELETE CASCADE,
+  FOREIGN KEY (code_prod) REFERENCES PRODUIT(code_prod) ON DELETE CASCADE,
   quantite INT NOT NULL CHECK (quantite > 0),
   PRIMARY KEY (id_commande, code_prod)
 );
