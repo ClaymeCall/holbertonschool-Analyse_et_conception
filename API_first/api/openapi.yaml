@@ -10,9 +10,57 @@ paths:
     post:
       summary: Réception des notifications de statut de paiement
       description: Webhook pour recevoir les mises à jour de statut de paiement depuis la banque.
+      tags:
+        - payments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookPayload'
       responses:
-        '200':
-          description: Notification traitée avec succès
+        '204':
+          description: Notification traitée avec succès, aucun contenu retourné.
+        '400':
+          description: Payload invalide.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    # A compléter lors des ateliers
+    WebhookPayload:
+      type: object
+      required:
+        - orderId
+        - status
+        - transactionId
+      properties:
+        orderId:
+          type: string
+          format: uuid
+          description: Identifiant unique de la commande.
+        status:
+          type: string
+          enum:
+            - SUCCESS
+            - FAILED
+          description: Statut du paiement.
+        transactionId:
+          type: string
+          pattern: '^TXN-[0-9]{8}$'
+          description: Identifiant unique de la transaction bancaire.
+      additionalProperties: false
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Message d'erreur.
+        details:
+          type: array
+          items:
+            type: string
+          description: Liste des détails d'erreur.
+      required:
+        - error
