@@ -33,3 +33,17 @@ Feature: Gouvernance et blocage des paiements frauduleux
     And un panier dont le montant est inférieur ou égal à 10 000 €
     When le client soumet son paiement
     Then le paiement est accepté par la gouvernance
+
+  Scenario Outline: Blocage par la gouvernance selon la matrice de risque
+    Given un client standard avec une commande de <montant_cmd> euros vers la <destination>
+    When le client soumet son paiement
+    Then le paiement est <resultat> par la gouvernance
+
+    Examples:
+      | montant_cmd | destination | resultat |
+      | 5000        | France      | accepté  |
+      | 10000       | France      | accepté  |
+      | 10001       | France      | refusé   |
+      | 5000        | Syldavie    | accepté  |
+      | 10000       | Syldavie    | refusé   |
+      | 10001       | Syldavie    | refusé   |
