@@ -3,4 +3,28 @@ Feature: Gouvernance et blocage des paiements frauduleux
   Je veux que le système évalue le niveau de risque de chaque paiement
   Afin de bloquer les transactions potentiellement frauduleuses protégeant ainsi l'entreprise
 
-  # A compléter lors des tâches
+  Scenario: Bloquer une transaction à haut risque depuis un pays sous embargo
+    Given un client dont le pays est référencé dans le registre des embargos
+    And un panier dont le montant dépasse 10 000 €
+    When le client tente de finaliser le paiement
+    Then la transaction est refusée
+    And le client est notifié du refus de transaction
+
+  Scenario: Autoriser une transaction à haut risque pour un client VIP
+    Given un client identifié comme "Client VIP"
+    And un panier dont le montant dépasse 10 000 €
+    And un pays référencé dans le registre des embargos
+    When le client tente de finaliser le paiement
+    Then la transaction est validée
+
+  Scenario: Autoriser une transaction standard depuis un pays non sous embargo
+    Given un client dont le pays n'est pas référencé dans le registre des embargos
+    And un panier dont le montant dépasse 10 000 €
+    When le client tente de finaliser le paiement
+    Then la transaction est validée
+
+  Scenario: Autoriser une transaction de faible montant depuis un pays sous embargo
+    Given un client dont le pays est référencé dans le registre des embargos
+    And un panier dont le montant est inférieur ou égal à 10 000 €
+    When le client tente de finaliser le paiement
+    Then la transaction est validée
