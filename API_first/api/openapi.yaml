@@ -3,11 +3,18 @@ info:
   title: MegaShop-B2B API
   version: 1.0.0
   description: API publique de MegaShop-B2B.
+  contact:
+    name: MegaShop-B2B Support
+    email: support@megashop-b2b.com
 servers:
   - url: https://api.megashop-b2b.com/v1
+tags:
+  - name: payments
+    description: Payment-related operations
 paths:
   /api/v1/payments/webhook:
     post:
+      operationId: receivePaymentWebhook
       summary: Réception des notifications de statut de paiement
       description: Webhook pour recevoir les mises à jour de statut de paiement depuis la banque.
       tags:
