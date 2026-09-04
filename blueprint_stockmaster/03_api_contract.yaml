@@ -27,8 +27,12 @@ paths:
                  - typeMouvement
                  - quantite
                properties:
-                 emplacementId:
+                 idProduit:
                    type: string
+                   format: uuid
+                 idEmplacement:
+                   type: string
+                   format: uuid
                  typeMouvement:
                    type: string
                    enum: [ENTREE, SORTIE]
@@ -40,3 +44,11 @@ paths:
             description: Mouvement créé avec succès
           "409":
             description: Requête rejetée en cas de conflit
+            content:
+              application/json:
+                schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Stock insuffisant: quantité demandée (10) > stock actuel"

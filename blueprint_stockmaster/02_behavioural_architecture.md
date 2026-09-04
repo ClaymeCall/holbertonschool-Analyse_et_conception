@@ -7,10 +7,11 @@ sequenceDiagram
     participant Base
 
     Client->>API: POST /inventory/movements (Request)
-    API->>Base: SELECT quantite FROM MOUVEMENT_STOCK WHERE id_produit = ?
+    API->>Base: SELECT quantite FROM MOUVEMENT_STOCK WHERE idProduit = ? AND idEmplacement = ?
 
     alt Base Approves
         Base-->>API: quantite_disponible
+        API->>Base: INSERT INTO MOUVEMENT_STOCK (...) VALUES (...)
         API-->>Client: HTTP 201 (Création Mouvement)
     else Base Rejects
         Base-->>API: quantite_disponible < quantite_demandée

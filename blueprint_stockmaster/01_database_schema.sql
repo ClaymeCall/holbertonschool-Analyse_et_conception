@@ -23,10 +23,11 @@ CREATE TABLE MOUVEMENT_STOCK (
   id UUID PRIMARY KEY,
   type_mouvement VARCHAR(16) NOT NULL CHECK (type_mouvement IN('ENTREE', 'SORTIE')),
   id_emplacement UUID NOT NULL,
+  id_produit UUID NOT NULL,
   FOREIGN KEY (id_emplacement) REFERENCES EMPLACEMENT(id_emplacement),
   FOREIGN KEY (id_produit) REFERENCES PRODUIT(id_produit),
   quantite INT NOT NULL CHECK quantite > 0,
-  date_mouvement DATE NOT NULL,
+  date_mouvement TIMESTAMP NOT NULL,
 );
 
 COMMIT;
