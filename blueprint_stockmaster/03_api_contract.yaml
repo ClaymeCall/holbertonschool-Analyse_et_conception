@@ -1,0 +1,42 @@
+openapi: 3.0.4
+info:
+  title: MegaShop-B2B API
+  description: Liste des points de terminaison et contrats pour MegaShop-B2B et le système logistique StockMaster-Pro
+  version: 1.0.0
+  contact:
+    name: Support MegaShop-B2B
+    email: support@megashop-b2b.com
+servers:
+  - url: https://api.megashop-b2b.com/v1
+tags:
+  - name: StockMaster-Pro
+    description: Itinéraires logistiques internes
+paths:
+   /inventory/movements:
+     post:
+       summary: Déplace les produits entre les emplacements.
+       description: Permet les mouvements d'entrée et de sortie d'un certain type de produit à un certain emplacement
+       requestBody:
+         required: true
+         content:
+           application/json:
+             schema:
+               type: object
+               required:
+                 - emplacementId
+                 - typeMouvement
+                 - quantite
+               properties:
+                 emplacementId:
+                   type: string
+                 typeMouvement:
+                   type: string
+                   enum: [ENTREE, SORTIE]
+                 quantite:
+                   type: integer
+                   minimum: 1
+       responses:
+          "201":
+            description: Mouvement créé avec succès
+          "409":
+            description: Requête rejetée en cas de conflit
