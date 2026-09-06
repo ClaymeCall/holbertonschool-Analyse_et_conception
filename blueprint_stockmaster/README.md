@@ -19,5 +19,8 @@ docker exec -it stockmaster-pro-db psql -U postgres -d megashop
 Lint the API contract using Spectral:
 
 ```bash
-docker run --rm -it -v $(pwd):/tmp stoplight/spectral lint --ruleset "/tmp/.spectral.yaml" "/tmp/03_api_contract.yaml"
+docker run --rm -it -v $(pwd):/tmp stoplight/spectral lint --ruleset "/tmp/.spectral.yaml" "/
+tmp/03_api_contract.yaml"
+
+No results with a severity of 'error' found!
 ```
