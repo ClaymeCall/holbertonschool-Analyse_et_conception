@@ -7,7 +7,7 @@ sequenceDiagram
     participant Base
 
     Client->>API: POST /inventory/movements (Request)
-    API->>Base: SELECT quantite FROM MOUVEMENT_STOCK WHERE idProduit = ? AND idEmplacement = ?
+    API->>Base: SELECT quantite FROM MOUVEMENT_STOCK WHERE id_produit = ? AND id_emplacement = ?
 
     alt Base Approves
         Base-->>API: quantite_disponible
